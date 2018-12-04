@@ -1,0 +1,68 @@
+#Sameeraja Mamidipalli
+#This program generates random numbers for a powerball ticket
+
+import time
+import datetime
+import random
+
+print('\n'*50)
+
+def time():
+    t = datetime.datetime.now().strftime("%y-%m-%d %H:%M:%S")
+    print('printed:'.upper(),t)
+    
+    
+def alpha(num):
+    alpha = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
+    return alpha[num]
+        
+def powerBall():
+    result = []
+    
+    for j in range(5):      
+        number = random.randint(1,69)
+        while (number in result):
+            number = random.randint(1,69)
+        result.append(number)
+    result.sort()
+    result.append(random.randint(1,26)) 
+    return result
+
+           
+def playPowerBall():
+
+    again = 'y'
+    price = 2.00
+    
+    print('Welcome to the automated powerball Quickpick Provider!\n\
+    Here you may purchase upto 10 Quickpick numbers.\n\
+    Quickpicks are provided at a rate of $2.00 per play.\n\n')
+    while again == 'Y' or again == 'y':
+        quickPicks = int(input("\n"+"Insert desired number of Quickpicks: "))       
+        while (quickPicks < 1 or quickPicks > 10):
+            print ("Quickpick can only be in between 1 and 10")
+            quickPicks = int(input("Insert desired number of Quickpicks: "))
+        print('\nTexas Powerball\n'.upper())
+        time()
+        print('\n')
+        
+        for i in range(quickPicks):
+            result = powerBall()
+            print('QP ' +alpha(i)+'.'+' '+str(result[0]).zfill(2)+' '+str(result[1]).zfill(2)+' '
+                      +str(result[2]).zfill(2)+' '+str(result[3]).zfill(2)+' '+str(result[4]).zfill(2)+' [PB]'+' '+str(result[5]).zfill(2))
+        totalCost = price * quickPicks
+        print('Cost: $',format(totalCost,'.2f'))
+
+        again = input('Again? [Y/N]: ')
+        
+        while(again!='N' and again!='n' and again!='Y' and again!='y'):
+            print ("Please enter only Y or N")
+            again = input('Again? [Y/N]: ')
+        if (again == 'N') or (again == 'n'):
+            print ("Thank you! Good Luck!")
+                
+def main():
+    playPowerBall()    
+
+main()       
+
